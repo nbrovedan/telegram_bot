@@ -1,22 +1,30 @@
-// server.js
-// where your node app starts
+var express = require('express')
+var app = express()
+var bodyParser = require('body-parser')
+const axios = require('axios')
+const {
+    Telegram
+} = require('telegraf')
 
-// init project
-const express = require("express");
-const app = express();
+const tg = new Telegram(process.env.BOT_TOKEN)
 
-// we've started you off with Express,
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+app.use(bodyParser.json()) // for parsing application/json
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+)
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function(request, response) {
-  response.sendFile(__dirname + "/views/index.html");
-});
+app.get('/random-jokes', function(req, res) {
+    axios.get('https://api.chucknorris.io/jokes/random').then(res => {
+        const txt = res.data.value
+        tg.sendMessage(process.env.GROUP_ID, txt)
+    })
+    res.send('Joke is delivered')
+})
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, function() {
-  console.log("Your app is listening on port " + listener.address().port);
-});
+// Finally, start our server
+app.listen(3000, function() {
+    console.log('Telegram app listening on port 3000!')
+})
