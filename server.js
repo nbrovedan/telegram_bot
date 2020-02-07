@@ -15,10 +15,7 @@ app.use(
 );
 
 app.get("/random-jokes", function(req, res) {
-  axios.get("https://api.chucknorris.io/jokes/random").then(res => {
-    const txt = res.data.value;
-    tg.sendMessage(process.env.CHANNEL_ID, txt);
-  });
+  tg.sendMessage(process.env.CHANNEL_ID, "Lembrete qualquer");
   res.send("Joke is delivered");
 });
 
