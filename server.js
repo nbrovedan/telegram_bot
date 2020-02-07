@@ -33,12 +33,22 @@ app.get("/lembrar", function(req, res) {
   res.send("Enviado...");
 });
 
-var sendMessage = function(msg, match){
+bot.onText( /\/lembrar/, function(msg, match){
   bot.sendMessage( msg.chat.id, "Digite o lembrete:");
-};
+});
 
-
-bot.onText( /\/lembrar/, sendMessage);
+bot.onText(/\/love/, function onLoveText(msg) {
+  const opts = {
+    reply_to_message_id: msg.message_id,
+    reply_markup: JSON.stringify({
+      keyboard: [
+        ['Yes, you are the bot of my life ❤'],
+        ['No, sorry there is another one...']
+      ]
+    })
+  };
+  bot.sendMessage(msg.chat.id, 'Do you love me?', opts);
+});
 
 // Finally, start our server
 app.listen(3000, function() {
