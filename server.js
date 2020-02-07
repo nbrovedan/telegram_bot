@@ -17,7 +17,7 @@ client.connect(err => {
 var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
 
 bot.on('message', function(msg){
-  if(msg.reply_to_message.text == 'Digite o lembrete:'){
+  if(msg.reply_to_message != undefined && msg.reply_to_message.text == 'Digite o lembrete:'){
     bot.sendMessage( msg.chat.id, "Beleza! Agora digita a hora que devo lembrar:");
   }
   console.log('msg', msg);
@@ -38,47 +38,6 @@ app.get("/lembrar", function(req, res) {
 
 bot.onText( /\/lembrar/, function(msg, match){
   bot.sendMessage( msg.chat.id, "Digite o lembrete:");
-});
-
-// Matches /editable
-bot.onText(/\/editable/, function onEditableText(msg) {
-  const opts = {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: 'Edit Text',
-            // we shall check for this value when we listen
-            // for "callback_query"
-            callback_data: 'edit'
-          },
-          {
-            text: 'Edit Text 2',
-            // we shall check for this value when we listen
-            // for "callback_query"
-            callback_data: 'edit2'
-          }
-        ]
-      ]
-    }
-  };
-  bot.sendMessage(msg.from.id, 'Original Text', opts);
-});
-
-bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-  const action = callbackQuery.data;
-  const msg = callbackQuery.message;
-  const opts = {
-    chat_id: msg.chat.id,
-    message_id: msg.message_id,
-  };
-  let text;
-
-  if (action === 'edit') {
-    text = 'Edited Text';
-  }
-
-  bot.editMessageText(text, opts);
 });
 
 // Finally, start our server
