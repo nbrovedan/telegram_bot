@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-app.get("/random-jokes", function(req, res) {
+app.get("/", function(req, res) {
   tg.sendMessage(process.env.CHANNEL_ID, "Lembrete qualquer");
   res.send("Joke is delivered");
 });
