@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "axios": "0.19.2",
     "telegraf": "3.36.0",
+    "node-telegram-bot-api": "^0.27.1",
     "body-parser": "1.19.0",
     "mongodb": "3.5.2"
   },

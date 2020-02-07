@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+var TelegramBot = require( 'node-telegram-bot-api' );
 const axios = require("axios");
 const { Telegram } = require("telegraf");
 
@@ -13,10 +14,11 @@ client.connect(err => {
   client.close();
 });
 
+var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
 
-
-
-const tg = new Telegram(process.env.BOT_TOKEN);
+bot.on('message', function(msg){
+  console.log('msg', msg);
+});
 
 app.use(bodyParser.json()); // for parsing application/json
 
@@ -27,9 +29,16 @@ app.use(
 );
 
 app.get("/lembrar", function(req, res) {
-  tg.sendMessage(process.env.CHANNEL_ID, "Lembrete qualquer");
+  bot.sendMessage(process.env.CHANNEL_ID, "Um lembrete qualquer");
   res.send("Enviado...");
 });
+
+var sendMessage = function(msg, match){
+  bot.sendMessage( msg.chat.id, "Digite o lembrete:");
+};
+
+
+bot.onText( /\/lembrar/, sendMessage);
 
 // Finally, start our server
 app.listen(3000, function() {
