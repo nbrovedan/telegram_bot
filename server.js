@@ -2,18 +2,19 @@ const result = dotenv.config()
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-var TelegramBot = require( 'node-telegram-bot-api' );
-const axios = require("axios");
-const { Telegram } = require("telegraf");
+//var TelegramBot = require( 'node-telegram-bot-api' );
+//const axios = require("axios");
+//const { Telegram } = require("telegraf");
 
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://admin:<password>@cluster0-niqji.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
+//const MongoClient = require('mongodb').MongoClient;
+//const uri = "mongodb+srv://admin:<password>@cluster0-niqji.mongodb.net/test?retryWrites=true&w=majority";
+//const client = new MongoClient(uri, { useNewUrlParser: true });
+
+/*client.connect(err => {
   const collection = client.db("test").collection("devices");
   console.log(collection);
   client.close();
-});
+});*/
 
 
 if (result.error) {
