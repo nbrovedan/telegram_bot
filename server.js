@@ -1,4 +1,4 @@
-require('dotenv').config()
+const result = dotenv.config()
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
@@ -15,7 +15,14 @@ client.connect(err => {
   client.close();
 });
 
-var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
+
+if (result.error) {
+  throw result.error
+}
+ 
+console.log(result.parsed)
+
+/*var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
 
 bot.on('message', function(msg){
   if(msg.reply_to_message != undefined && msg.reply_to_message.text == 'Digite o lembrete:'){
@@ -39,7 +46,7 @@ app.get("/lembrar", function(req, res) {
 
 bot.onText( /\/lembrar/, function(msg, match){
   bot.sendMessage( msg.chat.id, "Digite o lembrete:");
-});
+});*/
 
 // Finally, start our server
 app.listen(3000, function() {
