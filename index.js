@@ -1,9 +1,9 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-//var TelegramBot = require( 'node-telegram-bot-api' );
-//const axios = require("axios");
-//const { Telegram } = require("telegraf");
+var TelegramBot = require( 'node-telegram-bot-api' );
+const axios = require("axios");
+const { Telegram } = require("telegraf");
 
 //const MongoClient = require('mongodb').MongoClient;
 //const uri = "mongodb+srv://admin:<password>@cluster0-niqji.mongodb.net/test?retryWrites=true&w=majority";
@@ -17,9 +17,9 @@ var bodyParser = require("body-parser");
 
 
 
-/*var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
+var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
 
-bot.on('message', function(msg){
+/*bot.on('message', function(msg){
   if(msg.reply_to_message != undefined && msg.reply_to_message.text == 'Digite o lembrete:'){
     bot.sendMessage( msg.chat.id, "Beleza! Agora digita a hora que devo lembrar:");
   }
