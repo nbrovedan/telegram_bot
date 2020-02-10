@@ -1,4 +1,3 @@
-const result = dotenv.config()
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
