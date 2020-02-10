@@ -5,21 +5,21 @@ var TelegramBot = require( 'node-telegram-bot-api' );
 const axios = require("axios");
 const { Telegram } = require("telegraf");
 
-//const MongoClient = require('mongodb').MongoClient;
-//const uri = "mongodb+srv://admin:<password>@cluster0-niqji.mongodb.net/test?retryWrites=true&w=majority";
-//const client = new MongoClient(uri, { useNewUrlParser: true });
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://admin:<password>@cluster0-niqji.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
 
-/*client.connect(err => {
+client.connect(err => {
   const collection = client.db("test").collection("devices");
   console.log(collection);
   client.close();
-});*/
+})
 
 
 
 var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
 
-/*bot.on('message', function(msg){
+bot.on('message', function(msg){
   if(msg.reply_to_message != undefined && msg.reply_to_message.text == 'Digite o lembrete:'){
     bot.sendMessage( msg.chat.id, "Beleza! Agora digita a hora que devo lembrar:");
   }
@@ -41,7 +41,7 @@ app.get("/lembrar", function(req, res) {
 
 bot.onText( /\/lembrar/, function(msg, match){
   bot.sendMessage( msg.chat.id, "Digite o lembrete:");
-});*/
+});
 
 // Finally, start our server
 app.listen(3000, function() {
