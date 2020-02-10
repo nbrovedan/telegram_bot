@@ -16,11 +16,6 @@ var bodyParser = require("body-parser");
 });*/
 
 
-if (result.error) {
-  throw result.error
-}
- 
-console.log(result.parsed)
 
 /*var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
 
