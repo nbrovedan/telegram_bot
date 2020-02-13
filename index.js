@@ -1,49 +1,33 @@
-var express = require("express");
+var consign = require('consign');
+var express = require('express');
 var app = express();
-var bodyParser = require("body-parser");
-var TelegramBot = require( 'node-telegram-bot-api' );
-const axios = require("axios");
-const { Telegram } = require("telegraf");
 
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://admin:<password>@cluster0-niqji.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+consign()
+    .include('libs/db.js')
+    .then('libs/middlewares.js')
+    .then('intentions')
+    .then('routes')
+    .then('libs/boot.js')
+    .into(app);
 
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  console.log(collection);
-  client.close();
-})
-
-
-
-var bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true } );
-
-bot.on('message', function(msg){
-  if(msg.reply_to_message != undefined && msg.reply_to_message.text == 'Digite o lembrete:'){
-    bot.sendMessage( msg.chat.id, "Beleza! Agora digita a hora que devo lembrar:");
-  }
-  console.log('msg', msg);
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
-app.use(bodyParser.json()); // for parsing application/json
+if (app.get('env') === 'development') {
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.send(err.message);
+    });
+}
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-
-app.get("/lembrar", function(req, res) {
-  bot.sendMessage(process.env.CHANNEL_ID, "Um lembrete qualquer");
-  res.send("Enviado...");
-});
-
-bot.onText( /\/lembrar/, function(msg, match){
-  bot.sendMessage( msg.chat.id, "Digite o lembrete:");
-});
-
-// Finally, start our server
-app.listen(3000, function() {
-  console.log("Telegram app listening on port 3000!");
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
