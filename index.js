@@ -4,7 +4,9 @@ var app = express();
 
 consign()
     .include('libs/db.js')
+    .then('configs')
     .then('libs/middlewares.js')
+    .then('libs/telegram.js')
     .then('intentions')
     .then('routes')
     .then('libs/boot.js')

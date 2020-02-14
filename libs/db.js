@@ -6,7 +6,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 
 client.connect(err => {
   const collection = client.db("test").collection("devices");
-  console.log(collection);
+  //console.log(collection);
   client.close();
 });
 
